@@ -1,0 +1,6 @@
+#Ignore specific directories
+jellyfin/
+jellyseer/
+raddar/
+qbittorrent/
+prowlarr/
