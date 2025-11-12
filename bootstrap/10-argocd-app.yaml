@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argocd
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://argoproj.github.io/argo-helm
+    chart: argo-cd
+    targetRevision: 7.0.0         # cambia la versión aquí (upgrade/rollback)
+    helm:
+      releaseName: argo-cd
+      valueFiles:
+        - values/argocd-values.yaml
+      values: |
+        global:
+          domain: ""              # opcional, para Ingress más adelante
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
